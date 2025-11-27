@@ -3,18 +3,11 @@ import random
 
 mcp = FastMCP("DiceServer")
 
-mcp.tool()
-def roll_dice(n:int):
-    '''
-    Roll a dice n times
-    :param n: no. of trials
-    '''
-    try:
-        result = [r for r in random.randint(0,6)]
-        return result
-    except Exception as e:
-        return f"Error: {e}"
-    
+@mcp.tool()
+def roll_dice(sides: int = 6) -> int:
+    """Roll a dice with specified number of sides"""
+    return random.randint(1, sides)
 
+# CRITICAL: Local MCP servers MUST use stdio transport
 if __name__ == "__main__":
-    mcp.run()
+    mcp.run(transport="stdio") 
